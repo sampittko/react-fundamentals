@@ -1,9 +1,12 @@
 // Basic Forms
 // http://localhost:3000/isolated/exercise/06.js
 
-import React from 'react'
+import React, { useState } from 'react'
 
 function UsernameForm({onSubmitUsername}) {
+  const [value, setValue] = useState(null);
+  const [error, setError] = useState(null);
+
   // 🐨 add a submit event handler here (`handleSubmit`).
   // 💰 Make sure to accept the `event` as an argument and call
   // `event.preventDefault()` to prevent the default behavior of form submit
@@ -15,14 +18,29 @@ function UsernameForm({onSubmitUsername}) {
   // 🐨 Call `onSubmitUsername` with the value of the input
 
   // 🐨 add the onSubmit handler to the <form> below
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmitUsername(value);
+  }
+
+  const isValid = value => value.toLowerCase() === value;
+
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+
+    setValue(e.target.value)
+
+    setError(isValid(newValue) ? null : 'Username has to be in lowercase');
+  }
 
   // 🐨 make sure to associate the label to the input by specifying an `id` on
   // the input and a matching value as an `htmlFor` prop on the label.
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
+        <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
         <label>Username:</label>
-        <input type="text" />
+        <input value={value} onChange={handleChange} type="text" />
       </div>
       <button type="submit">Submit</button>
     </form>
