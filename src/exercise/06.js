@@ -28,7 +28,7 @@ function UsernameForm({onSubmitUsername}) {
   const handleChange = (e) => {
     const newValue = e.target.value;
 
-    setValue(e.target.value)
+    setValue(newValue)
 
     setError(isValid(newValue) ? null : 'Username has to be in lowercase');
   }
@@ -39,10 +39,10 @@ function UsernameForm({onSubmitUsername}) {
     <form onSubmit={handleSubmit}>
       <div>
         <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>
-        <label>Username:</label>
-        <input value={value} onChange={handleChange} type="text" />
+        <label htmlFor="username">Username:</label>
+        <input id="username" value={value} onChange={handleChange} type="text" />
       </div>
-      <button type="submit">Submit</button>
+      <button disabled={Boolean(error)} type="submit">Submit</button>
     </form>
   )
 }
